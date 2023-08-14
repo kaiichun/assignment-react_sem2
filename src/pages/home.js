@@ -15,11 +15,13 @@ import { MdOutlineDangerous } from "react-icons/md";
 
 export default function Home() {
   const [keywords, setKeywords] = useState("");
-  const journalList = JSON.parse(localStorage.getItem("journal"));
-  const studyList = JSON.parse(localStorage.getItem("plans"));
+  let journalList = JSON.parse(localStorage.getItem("journal"));
+  let studyList = JSON.parse(localStorage.getItem("plans"));
   const regex = /(<([^>]+)>)/gi;
 
   const searchedList = useMemo(() => {
+    if (!journalList) journalList = [];
+    if (!studyList) studyList = [];
     const combined = [...journalList, ...studyList];
     return combined
       .filter(
@@ -162,9 +164,9 @@ export default function Home() {
               })
             ) : (
               <Col className="mt-5">
-                <h1>
+                <h1 className="text-center">
                   No file enteries.
-                  <MdOutlineDangerous style={{ fontSize: "60px" }} />
+                  <MdOutlineDangerous />
                 </h1>
               </Col>
             )}
