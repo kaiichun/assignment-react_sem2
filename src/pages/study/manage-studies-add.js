@@ -50,7 +50,7 @@ export default function ManageStudiesAdd() {
     if (!plans) plans = [];
     if (title && content && startDate && endDate && startTime && endTime) {
       plans.push({
-        id: Math.floor(Math.random() * 999999999),
+        id: Math.floor(Math.random() * 100000),
         title: title,
         content: content,
         startDate: startDate,
@@ -199,8 +199,9 @@ export default function ManageStudiesAdd() {
         </Card.Body>
       </Card>
       <div className="text-center mt-3">
-        <Link to="/manage-studies">
-          <i className="bi bi-box-arrow-in-left me-2"></i>Back to Manage Planner
+        <Link to="/manage-studies" className="btn btn-outline-dark btn-sm ms-2">
+          Back to Manage Studies
+          <i className="bi bi-arrow-left ms-2"></i>
         </Link>
       </div>
     </div>

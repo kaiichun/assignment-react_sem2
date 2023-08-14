@@ -4,13 +4,7 @@ import { AiFillLock } from "react-icons/ai";
 
 export default function ManageJournals() {
   const [journal, setJournal] = useState([]);
-  const [password, setPassword] = useState("");
-  const [visible, setVisible] = useState(false);
-  const [showForm, setShowForm] = useState(true);
-  const [checkedList, setCheckedList] = useState([]);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
   useEffect(() => {
     const newJour = JSON.parse(localStorage.getItem("journal"));
 
@@ -32,7 +26,7 @@ export default function ManageJournals() {
           <thead>
             <tr>
               <th scope="col" width="30%">
-                Create Date
+                Create Date{" "}
               </th>
               <th scope="col" width="20%">
                 Title
@@ -92,8 +86,8 @@ export default function ManageJournals() {
         </table>
       </div>
       <div className="text-center">
-        <Link to="/dashboard" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Back to Dashboard
+        <Link to="/dashboard" className="btn btn-outline-dark btn-sm ms-2">
+          Back to Dashboard<i className="bi bi-arrow-left ms-2"></i>
         </Link>
       </div>
     </div>

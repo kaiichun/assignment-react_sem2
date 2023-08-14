@@ -79,6 +79,7 @@ export default function Study() {
                       style={{
                         height: "200px",
                         width: "250px",
+                        boxShadow: "16px 13px 32px 8px rgba(5,5,5,0.27)",
                       }}
                       className="MainCard"
                     >

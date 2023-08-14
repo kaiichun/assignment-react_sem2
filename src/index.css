@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("image/yellow\ bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
 }
 
 code {
@@ -42,9 +46,4 @@ code {
 .MainCard:hover {
   transition: all 0.3s ease-out;
   color: rgb(0, 0, 0);
-}
-
-@media only screen and (max-width: 800px) {
-  .PostText p {
-  }
 }

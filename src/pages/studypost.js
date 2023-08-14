@@ -57,7 +57,10 @@ export default function StudyPost() {
   return (
     <div className="container mx-auto my-5">
       <div>
-        <div>
+        <div
+          className="py-3 px-4 rounded-4"
+          style={{ background: "rgb(255, 255, 255, 0.5)" }}
+        >
           <div className="buttons text-end mb-5">
             Actions: <></>
             <Link
@@ -77,10 +80,7 @@ export default function StudyPost() {
           </div>
           <h1 className="h1 text-start">{title}</h1>
           <hr></hr>
-          <div
-            dangerouslySetInnerHTML={{ __html: content }}
-            className="PostText "
-          />
+          <div dangerouslySetInnerHTML={{ __html: content }} />
           <p className="mt-5 pt-5 text-muted">
             Time: {startTime}-{endTime}
             <br />
@@ -91,11 +91,13 @@ export default function StudyPost() {
       </div>
 
       <div className="text-center mt-5 ">
-        <Link to="/" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Home
+        <Link to="/" className="btn btn-outline-dark btn-sm ms-2">
+          Back to Home
+          <i className="bi bi-arrow-left ms-2"></i>
         </Link>
-        <Link to="/manage-studiess" className="btn btn-link btn-sm">
-          Manage Study<i className="bi bi-arrow-right"></i>
+        <Link to="/manage-studies" className="btn btn-outline-dark btn-sm ms-2">
+          Back to Manage Studies
+          <i className="bi bi-arrow-right ms-2"></i>
         </Link>
       </div>
     </div>

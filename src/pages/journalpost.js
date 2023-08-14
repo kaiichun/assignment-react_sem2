@@ -124,14 +124,17 @@ export default function JournalPost() {
                 className="PostContent"
               />
               <p className="mt-5 pt-5 text-muted">Create Date: {createDate}</p>
-              <p className="mt-0  pt-0 text-muted">
-                Edit at: {updateDate === "" ? "-" : updateDate}
+              <p className=" text-muted">
+                {updateDate === "" ? null : <p>Edit at: {updateDate}</p>}
               </p>
             </div>
           ) : null}
         </div>
       ) : (
-        <div>
+        <div
+          className="py-3 px-4 rounded-4"
+          style={{ background: "rgb(255, 255, 255, 0.5)" }}
+        >
           <div className="buttons text-end mb-3">
             Actions: <></>
             <Link
@@ -157,16 +160,19 @@ export default function JournalPost() {
           />
           <p className="mt-5 text-muted">Create Date: {createDate}</p>
           <p className=" text-muted">
-            Edit at: {updateDate === "" ? "-" : updateDate}
+            {updateDate === "" ? null : <p>Edit at: {updateDate}</p>}
           </p>
         </div>
       )}
-      <div className="text-center mt-5 ">
-        <Link to="/" className="btn btn-link btn-sm">
+      <div id="jbtn" className="text-center mt-5 ">
+        <Link to="/" className="btn btn-outline-dark btn-sm">
           <i className="bi bi-arrow-left"></i> Home
         </Link>
-        <Link to="/manage-journals" className="btn btn-link btn-sm">
-          Manage Journal<i className="bi bi-arrow-right"></i>
+        <Link
+          to="/manage-journals"
+          className="btn btn-outline-dark btn-sm ms-2"
+        >
+          Manage Journal<i className="bi bi-arrow-right ms-2"></i>
         </Link>
       </div>
     </div>

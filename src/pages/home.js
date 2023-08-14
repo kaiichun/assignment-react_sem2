@@ -60,109 +60,117 @@ export default function Home() {
           Please choose a username.
         </Form.Control.Feedback>
       </InputGroup>
-      <Container>
-        <Row>
-          {searchedList.length > 0 ? (
-            searchedList.map((journal) => {
-              const {
-                id,
-                title,
-                content,
-                status,
-                createDate,
-                item,
-                startDate,
-                endDate,
-                startTime,
-                endTime,
-              } = journal;
-              return (
-                <Col lg={4} md={6} sm={12} className=" mt-4 ">
-                  <Link
-                    to={
-                      item === "journal"
-                        ? `/journalpost/${id}`
-                        : `/studypost/${id}`
-                    }
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Card
+      {!searchedList ? (
+        <p>no record</p>
+      ) : (
+        <Container>
+          <Row>
+            {searchedList.length > 0 ? (
+              searchedList.map((journal) => {
+                const {
+                  id,
+                  title,
+                  content,
+                  status,
+                  createDate,
+                  item,
+                  startDate,
+                  endDate,
+                  startTime,
+                  endTime,
+                } = journal;
+                return (
+                  <Col lg={4} md={6} sm={12} className=" mt-4 ">
+                    {/* { journal === null ? <h1>NO record<h1/> :} */}
+                    <Link
+                      to={
+                        item === "journal"
+                          ? `/journalpost/${id}`
+                          : `/studypost/${id}`
+                      }
                       style={{
-                        height: "200px",
-                        width: "250px",
+                        textDecoration: "none",
                       }}
-                      className="MainCard"
                     >
-                      <Card.Body>
-                        <Card.Title className="mb-3 ">{title}</Card.Title>
-                        <Card.Text>
-                          {status === "private" ? (
-                            <td>
-                              <h3>
-                                <AiFillLock />
-                              </h3>
-                            </td>
-                          ) : (
-                            <>
-                              {content.length > 15 ? (
-                                <td
-                                  dangerouslySetInnerHTML={{
-                                    __html: content.slice(0, 15) + "...",
-                                  }}
-                                />
-                              ) : (
-                                <td
-                                  dangerouslySetInnerHTML={{
-                                    __html: content,
-                                  }}
-                                />
-                              )}
-                            </>
-                          )}
-                        </Card.Text>
-                      </Card.Body>
-                      <Container className="CardTime">
-                        {(() => {
-                          if (item === "journal") {
-                            return (
-                              <Row className="mb-4 mt-4">
-                                <small className="col-9 text-muted ">
-                                  {createDate}
-                                </small>
-                                <FaRegAddressBook className="col-3 fs-2" />
-                              </Row>
-                            );
-                          } else if (item === "study") {
-                            return (
-                              <Row className="mb-3 mt-4">
-                                <small className="col-9 text-muted">
-                                  Time: {startTime} -{endTime}
-                                  <br />
-                                  {startDate?.slice(0, 10)} -
-                                  {endDate?.slice(0, 10)}
-                                </small>
+                      <Card
+                        style={{
+                          height: "200px",
+                          width: "250px",
+                          boxShadow: "16px 13px 32px 8px rgba(5,5,5,0.27)",
+                        }}
+                        className="MainCard"
+                      >
+                        <Card.Body>
+                          <Card.Title className="mb-3 ">{title}</Card.Title>
+                          <Card.Text>
+                            {status === "private" ? (
+                              <td>
+                                <h3>
+                                  <AiFillLock />
+                                </h3>
+                              </td>
+                            ) : (
+                              <>
+                                {content.length > 15 ? (
+                                  <td
+                                    dangerouslySetInnerHTML={{
+                                      __html: content.slice(0, 15) + "...",
+                                    }}
+                                  />
+                                ) : (
+                                  <td
+                                    dangerouslySetInnerHTML={{
+                                      __html: content,
+                                    }}
+                                  />
+                                )}
+                              </>
+                            )}
+                          </Card.Text>
+                        </Card.Body>
+                        <Container className="CardTime">
+                          {(() => {
+                            if (item === "journal") {
+                              return (
+                                <Row className="mb-4 mt-4">
+                                  <small className="col-9 text-muted ">
+                                    {createDate}
+                                  </small>
+                                  <FaRegAddressBook className="col-3 fs-2" />
+                                </Row>
+                              );
+                            } else if (item === "study") {
+                              return (
+                                <Row className="mb-3 mt-4">
+                                  <small className="col-9 text-muted">
+                                    Time: {startTime} -{endTime}
+                                    <br />
+                                    {startDate?.slice(0, 10)} -
+                                    {endDate?.slice(0, 10)}
+                                  </small>
 
-                                <GiNotebook className="col-3 fs-2" />
-                              </Row>
-                            );
-                          }
-                        })()}
-                      </Container>
-                    </Card>
-                  </Link>
-                </Col>
-              );
-            })
-          ) : (
-            <Col className="mt-5">
-              <h1>
-                No file enteries.
-                <MdOutlineDangerous style={{ fontSize: "60px" }} />
-              </h1>
-            </Col>
-          )}
-        </Row>
-      </Container>
+                                  <GiNotebook className="col-3 fs-2" />
+                                </Row>
+                              );
+                            }
+                          })()}
+                        </Container>
+                      </Card>
+                    </Link>
+                  </Col>
+                );
+              })
+            ) : (
+              <Col className="mt-5">
+                <h1>
+                  No file enteries.
+                  <MdOutlineDangerous style={{ fontSize: "60px" }} />
+                </h1>
+              </Col>
+            )}
+          </Row>
+        </Container>
+      )}
     </div>
   );
 }

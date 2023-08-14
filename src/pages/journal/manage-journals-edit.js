@@ -151,11 +151,15 @@ export default function ManageJournalsEdit() {
         </form>
       </div>
       <div className="text-center">
-        <Link to="/manage-journals" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Back to Manage Journals
+        <Link
+          to="/manage-journals"
+          className="btn btn-outline-dark btn-sm ms-2"
+        >
+          Back to Manage Journals
+          <i className="bi bi-arrow-left ms-2"></i>
         </Link>
-        <Link to="/" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Back to Home
+        <Link to="/" className="btn btn-outline-dark btn-sm ms-2">
+          Back to Home<i className="bi bi-arrow-right ms-2"></i>
         </Link>
       </div>
     </div>

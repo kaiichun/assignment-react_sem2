@@ -28,8 +28,8 @@ export default function ManageStudies() {
           </Link>
         </div>
       </div>
-      <div className="card mb-2 p-4">
-        <table className="table">
+      <div className="card mb-2 p-4 overflow-x-scroll">
+        <table className="table ">
           <thead>
             <tr>
               <th scope="col">Title</th>
@@ -108,8 +108,9 @@ export default function ManageStudies() {
         </table>
       </div>
       <div className="text-center">
-        <Link to="/dashboard" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Back to Dashboard
+        <Link to="/dashboard" className="btn btn-outline-dark btn-sm ms-2">
+          Back to Dashboard
+          <i className="bi bi-arrow-left ms-2"></i>
         </Link>
       </div>
     </div>

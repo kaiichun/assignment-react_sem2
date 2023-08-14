@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import { Link, useParams, useNavigate } from "react-router-dom";
 import { RichTextEditor } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
@@ -11,92 +11,72 @@ import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
 import { IconClock } from "@tabler/icons-react";
 import { TimeInput } from "@mantine/dates";
-import { Space } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
+import { Space } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 
-export default function EditStudyPlanner() {
+export default function ManageStudiesAdd() {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const [plan, setPlan] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [createDate, setCreateDate] = useState("");
 
-  useEffect(() => {
-    const plans = JSON.parse(localStorage.getItem("plans"));
-
-    const plan = plans
-      ? plans.find((p) => parseInt(p.id) === parseInt(id))
-      : null;
-
-    if (plan) {
-      setPlan(plan);
-      setTitle(plan.title);
-      setContent(plan.content);
-      setStartTime(plan.startTime);
-      setEndTime(plan.endTime);
-      setStartDate(new Date(plan.startDate));
-      setEndDate(new Date(plan.endDate));
-    }
-  }, []);
-
-  const editor = useEditor(
-    {
-      extensions: [
-        StarterKit,
-        Underline,
-        Highlight,
-        TextAlign,
-        Placeholder.configure({
-          placeholder: "Edit your plans here...",
-        }),
-      ],
-      content: plan.content,
-      onUpdate: ({ editor }) => {
-        setContent(editor.getHTML());
-      },
-    },
-    [plan]
-  );
-
-  const updatePlan = () => {
-    const plans = JSON.parse(localStorage.getItem("plans"));
-
-    const newPlans = plans.map((p) => {
-      if (parseInt(p.id) === parseInt(id)) {
-        p.title = title;
-        p.content = content;
-        p.startTime = startTime;
-        p.endTime = endTime;
-        p.startDate = startDate;
-        p.endDate = endDate;
-
-        let syear = startDate.getFullYear();
-        let smonth = startDate.getMonth() + 1;
-        let sday = startDate.getDate();
-        let supdatedDate = new Date(`${syear}-${smonth}-${sday}`);
-        supdatedDate.setHours(11, 5);
-
-        p.startDate = supdatedDate;
-
-        let eyear = endDate.getFullYear();
-        let emonth = endDate.getMonth() + 1;
-        let eday = endDate.getDate();
-        let eupdatedDate = new Date(`${eyear}-${emonth}-${eday}`);
-        eupdatedDate.setHours(11, 5);
-
-        p.endDate = eupdatedDate;
-      }
-      return p;
-    });
-
-    localStorage.setItem("plans", JSON.stringify(newPlans));
-
-    navigate("/manage-studies");
+  const dateFormat = (date) => {
+    return new Date(date).toLocaleString();
   };
+  const now = new Date();
+  const nowDate = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Underline,
+      Highlight,
+      TextAlign,
+      Placeholder.configure({ placeholder: "Write your topic here..." }),
+    ],
+    content: content,
+    onUpdate: ({ editor }) => {
+      setContent(editor.getHTML());
+    },
+  });
+
+  const submitForm = () => {
+    let plans = JSON.parse(localStorage.getItem("plans"));
+    if (!plans) plans = [];
+    if (title && content && startDate && endDate && startTime && endTime) {
+      plans.push({
+        id: Math.floor(Math.random() * 100000),
+        title: title,
+        content: content,
+        startDate: startDate,
+        endDate: endDate,
+        startTime: startTime,
+        endTime: endTime,
+        createDate: nowDate,
+        item: "study",
+      });
+
+      localStorage.setItem("plans", JSON.stringify(plans));
+      notifications.show({
+        title: "Create succesful ",
+        message: "Thank You!",
+        color: "green",
+      });
+      navigate("/manage-studies");
+    } else {
+      notifications.show({
+        title: "Please insert the value",
+        message: "Thank You!",
+        color: "red",
+      });
+    }
+  };
+
   return (
     <div
       className="container mt-5 mx-auto"
@@ -104,17 +84,17 @@ export default function EditStudyPlanner() {
         maxWidth: "800px",
       }}
     >
-      <h1 className="pb-3">Edit Study Planner</h1>
+      <h1 className="pb-3">Add Study Planner</h1>
       <Card>
         <Card.Body>
           <Form
             onSubmit={(event) => {
               event.preventDefault();
-              updatePlan();
+              submitForm();
             }}
           >
             <Form.Group className="mb-3">
-              <Form.Label>What topic you want to change to?</Form.Label>
+              <Form.Label>What's your topic for the day?</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Write your topic..."
@@ -124,7 +104,7 @@ export default function EditStudyPlanner() {
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Change plans?</Form.Label>
+              <Form.Label>What's your plan for today?</Form.Label>
               <RichTextEditor editor={editor}>
                 <RichTextEditor.Toolbar sticky stickyOffset={60}>
                   <RichTextEditor.ControlsGroup>
@@ -200,18 +180,28 @@ export default function EditStudyPlanner() {
                 w={115}
               />
             </div>
+            <div className="mt-2">
+              <input
+                type="text"
+                className="form-control"
+                id="date-input"
+                value={createDate}
+                hidden
+              />
+            </div>
 
             <div className="text-end mt-3">
               <button type="submit" className="btn btn-primary">
-                Update
+                Add
               </button>
             </div>
           </Form>
         </Card.Body>
       </Card>
       <div className="text-center mt-3">
-        <Link to="/manage-studies">
-          <i className="bi bi-box-arrow-in-left me-2"></i>Back to Manage Planner
+        <Link to="/manage-studies" className="btn btn-outline-dark btn-sm ms-2">
+          Back to Manage Studies
+          <i className="bi bi-arrow-left ms-2"></i>
         </Link>
       </div>
     </div>

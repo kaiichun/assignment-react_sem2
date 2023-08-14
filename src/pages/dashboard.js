@@ -44,8 +44,9 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="mt-4 text-center">
-        <Link to="/" className="btn btn-link btn-sm">
-          <i className="bi bi-arrow-left"></i> Back
+        <Link to="/" className="btn btn-outline-dark btn-sm ms-2">
+          Back to Home
+          <i className="bi bi-arrow-left ms-2"></i>
         </Link>
       </div>
     </div>
